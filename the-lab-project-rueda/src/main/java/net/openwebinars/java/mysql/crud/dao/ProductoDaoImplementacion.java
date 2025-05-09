@@ -5,6 +5,7 @@ import net.openwebinars.java.mysql.crud.pool.MyDataSource;
 
 import java.sql.*;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ProductoDaoImplementacion implements ProductoDao{
@@ -52,7 +53,28 @@ public class ProductoDaoImplementacion implements ProductoDao{
 
     @Override
     public List<Producto> getAll() throws SQLException {
-        return List.of();
+        String sql = "SELECT * FROM producto";
+        List<Producto> result = new ArrayList<>();
+
+        try (Connection conn = MyDataSource.getConnection();
+             PreparedStatement pstm = conn.prepareStatement(sql);
+             ResultSet rs = pstm.executeQuery()) {
+
+            Producto prod;
+
+            while (rs.next()) {
+                prod = new Producto();
+                prod.setId_producto(rs.getInt("id_producto"));
+                prod.setNombre(rs.getString("nombre"));
+                prod.setDescripcion(rs.getString("descripcion"));
+                prod.setPrecio(rs.getDouble("precio"));
+                prod.setStock(rs.getInt("stock"));
+                prod.setId_categoria(rs.getInt("id_categoria"));
+
+                result.add(prod);
+            }
+        }
+        return result;
     }
 
     @Override
