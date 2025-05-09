@@ -24,13 +24,13 @@ public class App {
     public static void pruebaDao() {
         ProductoDao dao = ProductoDaoImplementacion.getInstance();
 
-//        Producto nuevoProducto = new Producto(
-//                "Pulsera con charms",
-//                "Pulsera Pandora con Charms dorados y plateados.",
-//                199.99,
-//                22,
-//                1
-//        );
+        Producto nuevoProducto = new Producto(
+                "Collar de diamantes",
+                "Collar dorado de Swaroski con diamantes",
+                1099.99,
+                22,
+                1
+        );
 
         try {
 //            int resultado = dao.add(nuevoProducto);
@@ -45,6 +45,28 @@ public class App {
                 System.out.println("Listado de productos:");
                 productos.forEach(System.out::println);
             }
+
+            Producto prod1 = dao.getById(4);
+            System.out.println("Producto por id específico:");
+            System.out.println(prod1);
+
+            Producto prod2 = dao.getById(4);
+
+            prod2.setPrecio(22);
+            prod2.setStock(75);
+
+            int n = dao.update(prod2);
+            System.out.println("Nº productos actualizados: " + n);
+
+            prod2 = dao.getById(4);
+            System.out.println("Info producto actualizado: " + prod2);
+
+            dao.delete(6);
+            productos = dao.getAll();
+            if (productos.isEmpty())
+                System.out.println("No hay productos registrados");
+            else
+                productos.forEach(System.out::println);
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
