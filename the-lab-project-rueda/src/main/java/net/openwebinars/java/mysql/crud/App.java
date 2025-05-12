@@ -18,7 +18,8 @@ import java.util.List;
 public class App {
 
     public static void main(String[] args) {
-        pruebaDao();
+        Menu menu = new Menu();
+        menu.init();
     }
 
     public static void pruebaDao() {
